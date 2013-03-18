@@ -1,0 +1,27 @@
+<?php
+/**
+ * @file contains test code.
+ */
+use Symfony\Component\Yaml\Yaml;
+use Drupal\Core\Datetime\DrupalDateTime;
+/**
+ * Implements hook_menu().
+ */
+function test_menu() {
+  $items['test/yml'] = array(
+    'title' => 'Test YAML file',
+    'page callback' => 'test_yml_check',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function test_yml_check() {
+  $format = config('system.date')->get('formats.html_datetime.pattern.intl');
+  $date = new DrupalDateTime();
+  $wrong_date = $date->format($format);
+  $correct_date = $date->format('yyyy-MM-dd\Tkk:mm:ssZZ');
+  var_dump($wrong_date);
+  var_dump($correct_date);
+}
